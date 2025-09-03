@@ -19,13 +19,6 @@ class Cars:
 
 carsList = List[Cars]
 
-def toJson():
-    newList= []
-    for car in carsList:
-        carsList.model_dump(car)
-        newList.append(car)
-    return newList
-
 @app.get("/ping")
 def root():
     return Response(content="pong", status_code=200, media_type="text/plain")
