@@ -38,10 +38,12 @@ def post_cars(cars: List[Cars]):
 
 @app.get("/cars")
 def get_cars():
-    return Response(status_code=200, content=carsList, type="application/json")
+    return Response(status_code=200, content=carsList.dump(), type="application/json")
 
 
-@app.get("car/{id}")
+@app.get("/car/{id}")
 def get_car_by_id():
     id= Request.headers["id"]
-    
+    for car in carsList:
+        if car.id == id:
+            return Response(status_code=200, content=car.dump(), type="application/json")
