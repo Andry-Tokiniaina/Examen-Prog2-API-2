@@ -7,6 +7,41 @@ import datetime
 
 app = FastAPI()
 
+class Characteristics:
+    max_speed: float
+    max_fluel_capacity: float
+
+class Cars:
+    id: int
+    brand: str
+    model: str
+    characteristics: Characteristics
+
+carsList = List[Cars]
+
+def toJson():
+    newList= []
+    for car in carsList:
+        carsList.model_dump(car)
+        newList.append(car)
+    return newList
+
 @app.get("/ping")
 def root():
     return Response(content="pong", status_code=200, media_type="text/plain")
+
+@app.post("/cars")
+def post_cars(cars: List[Cars]):
+    for car in cars:
+        carsList.append(car)
+    return Response(status_code=201, content=carsList, type="application/json")
+
+@app.get("/cars")
+def get_cars():
+    return Response(status_code=200, content=carsList, type="application/json")
+
+
+@app.get("car/{id}")
+def get_car_by_id():
+    id= Request.headers["id"]
+    

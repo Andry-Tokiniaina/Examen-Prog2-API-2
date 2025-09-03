@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: STD24094 Examen API
+  version: 1.0.0
+  description: "This is a specification of STD24094"
+servers:
+  - url: 'http://localhost:8000'
+paths:
+  /ping:
+    get:
+      description: "return pong"
+      responses:
+        200:
+          description: "this path return pong"
+          content:
+            text/plain:
+              example: pong
+  /cars:
+    post:
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      description: ""
+      responses:
+        201:
+          description: "Succesfull added"
+    get:
+      description: "return all cars"
+      responses:
+        200:
+          description: "return cars"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+  /car/{id}:
+    get:
+      parameters:
+        - name: id
+          in: header
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+components:
+  schemas:
+    Characteristics:
+      type: object
+      properties:
+        max_spped:
+          type: integer
+        max_fluel_capacity:
+          type: integer
+    Car:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: "01"
+        brand:
+          type: string
+        model:
+          type: string
+          example: "Toyota"
+        Characteristics:
+          $ref: '#/components/schemas/Characteristics'
